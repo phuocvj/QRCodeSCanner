@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "QRCodeScanner",
-    "slug": "QRCodeScanner",
-    "version": "1.0.0",
+    "name": "QR Scanner",
+    "slug": "QRScanner",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -20,13 +20,18 @@
       "supportsTablet": true
     },
     "android": {
+      "icon": "./assets/app-icon.png",
+      "versionCode": 4,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/app-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.csichangshin.QRCodeScanner"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": "Chương trình sử dụng mobile để scan QR code trên PC Covid.",
+    "githubUrl": "https://github.com/phuocvj/QRCodeScanner.git"
   }
 }
