@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "QR Scanner",
+    "name": "Changshin QR Scanner",
     "slug": "QRScanner",
-    "version": "1.0.3",
+    "version": "1.0.5",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -11,6 +11,7 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
+      "checkAutomatically": "ON_ERROR_RECOVERY",
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": [
@@ -21,7 +22,7 @@
     },
     "android": {
       "icon": "./assets/app-icon.png",
-      "versionCode": 4,
+      "versionCode": 6,
       "adaptiveIcon": {
         "foregroundImage": "./assets/app-icon.png",
         "backgroundColor": "#FFFFFF"

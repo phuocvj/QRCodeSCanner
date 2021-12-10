@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { View, FlatList, Animated, Text, TouchableOpacity } from "react-native";
-
+import { Button } from "native-base";
 // Components
 import SliderItem from "../SliderItem/SliderItem";
 

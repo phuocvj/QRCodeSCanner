@@ -24,7 +24,7 @@ export default function RootStackScreen(){
     return(
         <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen options={{title:"QR Covid Location Scanner"}} name="Home" component={HomeScreen}/>
+        <Stack.Screen options={{title:"QR Location Scanner"}} name="Home" component={HomeScreen}/>
         <Stack.Screen options={{title:"QR Code"}} name="Scan" component={ScanQRScreen} />
       </Stack.Navigator>
     </NavigationContainer>

@@ -62,11 +62,11 @@ const NextButton = ({
 
                 // If progressRef is initiated, set the stroke
 
-                // if (progressRef?.current) {
-                //     progressRef.current.setNativeProps({
-                //         strokeDashoffset,
-                //     });
-                // }
+                if (progressRef?.current) {
+                    progressRef.current.setNativeProps({
+                        strokeDashoffset,
+                    });
+                }
             },
             [percentage]
         );

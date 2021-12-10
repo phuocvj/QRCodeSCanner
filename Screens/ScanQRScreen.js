@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Dimensions } from 'react-native';
+import { Text, View, StyleSheet, Dimensions, Alert } from 'react-native';
 import { Button, Icon, Image, Stack, Center, useToast,Box } from 'native-base';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Camera } from "expo-camera";
 import { Ionicons } from "@expo/vector-icons";
 import Constants from 'expo-constants';
 import { Audio } from "expo-av";
+import Ping from 'react-native-ping';
 const { width } = Dimensions.get('window')
 const qrSize = width * 0.7
 export default function ScanQRScreen() {
@@ -22,15 +23,16 @@ export default function ScanQRScreen() {
     })();
 
     (async () => {
-      fetch("http://172.30.10.9")
+      fetch("http://172.30.10.117:9000/")
         .then((response) => {
           setnetState(response.status === 200)
+          console.log("net state: ", netState);
         })
         .catch((error) => { 
           console.log('network error: ' + error);
         })
     })();
-   
+    
   }, []);
   const toast = useToast();
 
@@ -71,10 +73,14 @@ export default function ScanQRScreen() {
       }
       else //Is a number
       {
-        console.log("respone: " ,netState);
-        // console.log(UserID);
-        SaveData2Ora(UserID, data);
-        console.log("trang thai: ", status);
+        if (netState){
+          console.log("respone: " ,netState);
+          // console.log(UserID);
+          SaveData2Ora(UserID, data);
+          console.log("trang thai: ", status);
+        }else{
+          Alert.alert("Lỗi Wifi hoặc tín hiệu mạng!","Mất kết nối với máy chủ!");
+        }
       }
     };
   };
@@ -154,15 +160,7 @@ export default function ScanQRScreen() {
                 },
               });
             } else if (status == "E") {
-              toast.show({
-                render: () => {
-                  return (
-                    <Box bg="red.500" px="2" py="1" rounded="sm" mb={5}>
-                      Có lỗi xảy ra, hãy kiểm tra lại tín hiệu mạng!
-                    </Box>
-                  );
-                },
-              });
+              Alert.alert("Lỗi mạng!","Không lưu được, mất kết nối với máy chủ!");
             } else {
               toast.show({
                 render: () => {
@@ -179,15 +177,6 @@ export default function ScanQRScreen() {
         .catch((err) => {
           status = "E";
           console.log("fetch", err);
-          toast.show({
-            render: () => {
-              return (
-                <Box bg="red.500" px="2" py="1" rounded="sm" mb={5}>
-                  Có lỗi xảy ra, hãy kiểm tra lại tín hiệu mạng!
-                </Box>
-              );
-            },
-          });
         });
     }
     return (
@@ -202,14 +191,14 @@ export default function ScanQRScreen() {
         >
           <Center><Image
             style={styles.qr}
-            alt="QR"
+            alt="Không có mạng!"
             source={require('../assets/img/qr.png')}
           /></Center>
 
         </Camera>
-        {!netState && (
+        {!netState? (
           <Button bgColor="red.600">Network Error!</Button>
-        )}
+        ):null}
         {scanned && (
           <Button leftIcon={<Icon as={Ionicons} name="refresh-outline" size="md"
           />} bgColor="green.400" onPress={() => setScanned(false)}>

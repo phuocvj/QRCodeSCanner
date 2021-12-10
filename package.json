@@ -7,7 +7,11 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "build:production": "expo build:android --release-channel production",
+    "build:staging": "expo build:android --release-channel staging",
+    "publish:production": "expo publish --release-channel production",
+    "publish:staging": "expo publish --release-channel staging"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.14",
@@ -19,12 +23,14 @@
     "expo-barcode-scanner": "~11.1.2",
     "expo-camera": "^12.0.3",
     "expo-status-bar": "~1.1.0",
+    "expo-updates": "^0.10.15",
     "native-base": "^3.2.2",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
     "react-native-elements": "^3.4.2",
     "react-native-gesture-handler": "^2.0.0",
+    "react-native-ping": "^1.2.6",
     "react-native-reanimated": "^2.2.4",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "^3.10.0",

@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import {
     useToken,
     NativeBaseProvider,
@@ -25,108 +25,110 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import globalStyles from "../components/styles/globalStyles";
 // Components
 import Slider from "../components/Slider/Slider";
-
+import { Touchable, TouchableOpacity } from 'react-native';
+import * as Updates from 'expo-updates';
 const Tab = createBottomTabNavigator();
 function HomeScreenInfo() {
+    const HandleAutoUpdate= async()=> {
+        try {
+           console.log("bat dau check update");
+          const update = await Updates.checkForUpdateAsync();
+          
+          if (update.isAvailable) {
+            console.log("New Updates!!");
+            await Updates.fetchUpdateAsync();
+            // ... thông báo cho người dùng về bản cập nhật ...
+            await Updates.reloadAsync();
+          } else {
+            // No Update Available...
+            console.log("No Update Available");
+          }
+         
+        } catch (e) {
+            console.log(e);
+          // xử lí lỗi.
+          // thường thì sẽ vào đây khi ứng dụng không thể kết nối đến internet.
+        }
+      };
     return (
-        // <Center flex={1}
-        //     _light={{ backgroundColor: 'gray.300' }}
-        //     _dark={{ backgroundColor: 'gray.700' }}
-        // >
-        //     <Stack
-        //         rounded="lg"
-        //         overflow="hidden"
-        //         width="90%"
-        //         height="90%"
-        //         shadow={9}
-        //         _light={{ backgroundColor: 'coolGray.50' }}
-        //         _dark={{ backgroundColor: 'gray.700' }}>
-        //         <ScrollView>
-        //             <Box>
-        //                 <Image
-        //                     w="100%"
-        //                     h={200}
-        //                     source={require("./images/pc-covid.jpg")}
-        //                     alt="image"
-        //                 />
-        //                 <Center flex={1}
-        //                     bg="violet.500"
-        //                     _text={{ color: 'white', fontWeight: '700', fontSize: 'xs' }}
-        //                     position="absolute"
-        //                     bottom="0"
-        //                     px="3"
-        //                     py="1.5">
-        //                     PHOTOS
-        //                 </Center>
-        //             </Box>
-        //             <Stack p="4" space={1}>
-        //                 <Stack space="2">
-        //                     <Heading size="md" ml="-1">
-        //                         Hướng dẫn
-        //                     </Heading>
-        //                     <Text
-        //                         fontSize="xs"
-        //                         color="violet.500"
-        //                         fontWeight="500"
-        //                         ml="-0.5"
-        //                         mt="-1">
-        //                         QR Covid Scanner.
-        //                     </Text>
-        //                 </Stack>
-        //                 <Text fontWeight="400">
-        //                     Hãy bấm vào QR code trên PC Covid để mở khóa thông tin và sử dụng ứng dụng này để quét mã QR đó.
-        //                 </Text>
-        //                 <Divider />
-        //             </Stack>
-        //             <VStack space={2}
-        //             >
-        //             </VStack>
-        //         </ScrollView>
-        //     </Stack>
-        // </Center>
+        // <View>
+        //     <Button onPress={HandleAutoUpdate}>Check for Update</Button>
+        // </View>
         <Slider />
     )
 }
-const customTabBarStyle = {
-    activeTintColor: '#0091EA',
-    inactiveTintColor: 'gray',
-    style: { backgroundColor: 'white' },
-}
+
 export default function HomeScreen({ navigation }) {
+    const HandleAutoUpdate= async()=> {
+        try {
+            console.log("bat dau check update");
+          const update = await Updates.checkForUpdateAsync();
+          if (update.isAvailable) {
+            console.log("New Updates!!");
+            await Updates.fetchUpdateAsync();
+            // ... thông báo cho người dùng về bản cập nhật ...
+            await Updates.reloadAsync();
+          } else {
+            // No Update Available...
+            console.log("No Update Available");
+          }
+         
+        } catch (e) {
+          // xử lí lỗi.
+          // thường thì sẽ vào đây khi ứng dụng không thể kết nối đến internet.
+        }
+      };
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            HandleAutoUpdate();
+
+        });
+        return unsubscribe;
+    }, [navigation])
     return (
         <Tab.Navigator
             initialRouteName="homescreen"
             activeColor="#fff"
-            screenOptions={customTabBarStyle}
-            shifting="false"
         >
             <Tab.Screen name="homescreen"
-                
+                onPress={() => navigation.navigate('Scan')}
                 options={{
                     headerShown:false,
-                    tabBarLabel: 'Scan QR'.toUpperCase(),
-                    
+                    tabBarShowLabel:false,
+                    tabBarStyle:{
+                        backgroundColor:"#ffffff",
+                        bottom:15,
+                        left:10,
+                        right:10,
+                        position:"absolute",
+                        height:50,
+                        borderRadius:20,
+                    },
                     tabBarLabelStyle: {
-                        fontSize: 20,
+                        fontSize: 10,
+                        color: "yellow",
                       },
                     tabBarIcon: ({ color }) => (
-                        <Pressable
+                        <TouchableOpacity
+                        backgroundColor="red.500"
                             style={{
-                                bottom: 0, // space from bottombar
-                                position: 'absolute',
+                                bottom: 2, // space from bottombar
+                                backgroundColor: "red.500"
                             }}
                             onPress={() => navigation.navigate('Scan')}
                         >
-                            <Button colorScheme="green"
+                            <Button
                                 borderWidth="5"
                                 borderColor="white"
                                 onPress={() => navigation.navigate('Scan')}
                                 leftIcon={<Icon as={Ionicons} name="qr-code-outline" size="lg"
                                     onPress={() => navigation.navigate('Scan')}
                                 />}
+                                shadow={9}
                                 borderRadius={50} size="80px"
                             ></Button>
-                        </Pressable>
+                        </TouchableOpacity>
                     )
                 }}
                 component={HomeScreenInfo} />
