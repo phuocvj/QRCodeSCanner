@@ -59,17 +59,29 @@ export default function ScanQRScreen() {
       });
     } else {
       var Ardata = data.split(/[ |]+/);
-      let UserID = Ardata[0];
+      let UserID = Ardata[0].toUpperCase();
       if (isNaN(UserID)) { //Input is not a number
+        if (UserID==="USER"){
         toast.show({
           render: () => {
             return (
               <Box bg="red.500" px="2" py="1" rounded="sm" mb={5}>
-                Đây không phải là QR của PC Covid.
+                 Chưa khai báo y tế, vui lòng khai báo ý tế và scan lại.
               </Box>
             );
           },
         });
+      }else{
+        toast.show({
+          render: () => {
+            return (
+              <Box bg="red.500" px="2" py="1" rounded="sm" mb={5}>
+                 QR Không đúng định dạng của PC Covid, hãy kiểm tra lại.
+              </Box>
+            );
+          },
+        });
+      }
       }
       else //Is a number
       {
@@ -79,7 +91,7 @@ export default function ScanQRScreen() {
           SaveData2Ora(UserID, data);
           console.log("trang thai: ", status);
         }else{
-          Alert.alert("Lỗi Wifi hoặc tín hiệu mạng!","Mất kết nối với máy chủ!");
+          //Alert.alert("Lỗi Wifi hoặc tín hiệu mạng!","Mất kết nối với máy chủ!");
         }
       }
     };
@@ -150,6 +162,8 @@ export default function ScanQRScreen() {
                 },
               });
             } else if (status == "D") {
+             // let userr = "phuoc le";
+             // console.log(userr.toUpperCase());
               toast.show({
                 render: () => {
                   return (

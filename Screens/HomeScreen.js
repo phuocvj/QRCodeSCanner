@@ -97,13 +97,13 @@ export default function HomeScreen({ navigation }) {
                     headerShown:false,
                     tabBarShowLabel:false,
                     tabBarStyle:{
-                        backgroundColor:"#ffffff",
-                        bottom:15,
-                        left:10,
-                        right:10,
-                        position:"absolute",
-                        height:50,
-                        borderRadius:20,
+                        // backgroundColor:"#ffffff",
+                        // bottom:15,
+                        // left:10,
+                        // right:10,
+                       // position:"absolute",
+                         height:70,
+                        // borderRadius:20,
                     },
                     tabBarLabelStyle: {
                         fontSize: 10,
@@ -114,6 +114,7 @@ export default function HomeScreen({ navigation }) {
                         backgroundColor="red.500"
                             style={{
                                 bottom: 2, // space from bottombar
+                                position:"absolute",
                                 backgroundColor: "red.500"
                             }}
                             onPress={() => navigation.navigate('Scan')}
@@ -121,6 +122,7 @@ export default function HomeScreen({ navigation }) {
                             <Button
                                 borderWidth="5"
                                 borderColor="white"
+                                colorScheme='green'
                                 onPress={() => navigation.navigate('Scan')}
                                 leftIcon={<Icon as={Ionicons} name="qr-code-outline" size="lg"
                                     onPress={() => navigation.navigate('Scan')}
